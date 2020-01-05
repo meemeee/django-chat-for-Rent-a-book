@@ -69,11 +69,13 @@ def check_online(stream):
         packet = yield from stream.get()
         session_id = packet.get('session_key')
         opponent_username = packet.get('username')
+        print(opponent_username)
         if session_id and opponent_username:
             user_owner = get_user_from_session(session_id)
             if user_owner:
                 # Find all connections including user_owner as opponent
                 online_opponents = list(filter(lambda x: x[1] == user_owner.username, ws_connections))
+                print(online_opponents)
                 logger.debug('User ' + user_owner.username + ' has ' + str(len(online_opponents)) + ' opponents online')
                 # Send user online statuses of his opponents
                 socket = ws_connections.get((user_owner.username, opponent_username))
