@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls import url
-
 from . import views
 
 urlpatterns = [
@@ -13,5 +12,10 @@ urlpatterns = [
         regex=r'^dialogs/$',
         view=views.DialogListView.as_view(),
         name='dialogs'
+    ),
+    url(
+        regex=r'^alert/(?P<username>[\w.@+-]+)$',
+        view=views.addAlert,
+        name='alert'
     ),
 ]
