@@ -22,6 +22,8 @@ class Message(TimeStampedModel, SoftDeletableModel):
     sender = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("Author"), related_name="messages",
                                on_delete=models.CASCADE)
     text = models.TextField(verbose_name=_("Message text"))
+    # field to add notes about book url
+    note = models.TextField(verbose_name=_("note"), blank=True)
     read = models.BooleanField(verbose_name=_("Read"), default=False)
     all_objects = models.Manager()
 
