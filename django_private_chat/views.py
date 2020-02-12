@@ -13,6 +13,7 @@ from django.conf import settings
 from django.db.models import Q, Max
 from .utils import get_dialogs_with_user
 from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
 
 from rentabook.models import BookInstance
 
@@ -57,7 +58,7 @@ class DialogListView(LoginRequiredMixin, generic.ListView):
             )
             return context
 
-
+@login_required
 def addAlert(request, username):
     """Prompt alerts in conversation when redirected from a bookpage"""
     
