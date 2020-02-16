@@ -75,16 +75,20 @@ def addAlert(request, username):
     user_opponent = get_user_model().objects.get(username=username)
     dialog = get_dialogs_with_user(user_owner, user_opponent)
 
+    # Create new dialog if there is none existing
+    if len(dialog) == 0:
+        dialog = models.Dialog.objects.create(owner=user_owner, opponent=user_opponent)
+        # Retrive dialog once again
+        dialog = get_dialogs_with_user(user_owner, user_opponent)
+
     # Save the message
-    if len(dialog) > 0:
-        msg = models.Message.objects.create(
-            dialog=dialog[0],
-            sender=sender,
-            text=book_title,
-            # link to book in Rentabook
-            note="/book/{}".format(book_id),
-            read=False
-        )
-    else:
-        pass
+    msg = models.Message.objects.create(
+        dialog=dialog[0],
+        sender=sender,
+        text=book_title,
+        # link to book in Rentabook
+        note="/book/{}".format(book_id),
+        read=False
+    )
+    
     return redirect('dialogs_detail', user_opponent) 
